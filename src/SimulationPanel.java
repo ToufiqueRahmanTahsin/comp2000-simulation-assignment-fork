@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -62,10 +63,12 @@ public class SimulationPanel extends JPanel {
 
         g.setColor(Color.DARK_GRAY);
         Colony colony = world.getColony();
+        java.util.Map<String, Long> roles = colony.countByRole();
         g.drawString("Food in nest: " + nest.getStoredFood(), 8, map.getHeight() * CELL_SIZE + 20);
-        g.drawString("Total ants: " + colony.getAnts().size()
-                + " (Scouts: " + colony.countScouting()
-                + ", carrying: " + colony.countCarryingFood() + ")",
+        g.drawString("Ants: " + colony.getAnts().size()
+                + " Scout=" + roles.getOrDefault("Scout", 0L)
+                + " Forager=" + roles.getOrDefault("Forager", 0L)
+                + " carrying=" + colony.countCarryingFood(),
                 128, map.getHeight() * CELL_SIZE + 20);
     }
 }
