@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Colony {
     private final List<Ant> ants;
@@ -55,6 +57,19 @@ public class Colony {
 
     public long countScouting() {
         return ants.stream().filter(Ant::isScouting).count();
+    }
+
+    // Week 11: group ants by role
+    public Map<String, Long> countByRole() {
+        return ants.stream()
+                .collect(Collectors.groupingBy(
+                        a -> a.isScouting() ? "Scout" : "Forager",
+                        Collectors.counting()));
+    }
+
+    // Week 12: read-only parallel count. Do not parallelise the update.
+    public long countCarryingFoodParallel() {
+        return ants.parallelStream().filter(Ant::isCarryingFood).count();
     }
 
     public void update(World world) {
