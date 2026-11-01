@@ -59,7 +59,6 @@ public class Colony {
         return ants.stream().filter(Ant::isScouting).count();
     }
 
-    // Week 11: group ants by role
     public Map<String, Long> countByRole() {
         return ants.stream()
                 .collect(Collectors.groupingBy(
@@ -67,7 +66,6 @@ public class Colony {
                         Collectors.counting()));
     }
 
-    // Week 12: read-only parallel count. Do not parallelise the update.
     public long countCarryingFoodParallel() {
         return ants.parallelStream().filter(Ant::isCarryingFood).count();
     }
