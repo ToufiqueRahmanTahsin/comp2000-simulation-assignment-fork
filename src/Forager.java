@@ -1,7 +1,5 @@
 public class Forager extends Ant {
 
-    private FoodSource targetFood;
-
     public Forager(
             double x,
             double y,
@@ -15,11 +13,6 @@ public class Forager extends Ant {
 
         if (!returningHome) {
 
-            if (targetFood != null && !targetFood.hasFood()) {
-
-                targetFood = null;
-            }
-
             FoodSource food =
                     world.findNearbyFood(
                             x,
@@ -28,8 +21,6 @@ public class Forager extends Ant {
                     );
 
             if (food != null && food.hasFood()) {
-
-                targetFood = food;
 
                 int collected =
                         food.collectFood(5);
@@ -42,65 +33,24 @@ public class Forager extends Ant {
 
                     returningHome = true;
 
-                    if (food.hasFood()) {
-
-                        world.addFoodPheromone(
-                                x,
-                                y,
-                                1.5,
-                                food
-                        );
-                    }
-                }
-            }
-
-            if (!returningHome) {
-
-                if (targetFood == null) {
-
-                    Pheromone pheromone =
-                            world.findNearbyFoodPheromone(
-                                    x,
-                                    y,
-                                    30
-                            );
-
-                    if (pheromone != null) {
-
-                        targetFood = pheromone.getFoodSource();
-                    }
-                }
-
-                if (targetFood != null && targetFood.hasFood()) {
-
-                    // A linked trail provides a hint to a known food source.
-                    moveTowards(targetFood.getX(), targetFood.getY());
-                    return;
+                    world.addPheromone(
+                            x,
+                            y,
+                            1.5
+                    );
                 }
             }
         }
 
-        if (returningHome && targetFood != null && targetFood.hasFood()) {
+        if (returningHome) {
 
-            world.addFoodPheromone(
+            world.addPheromone(
                     x,
                     y,
-                    0.5,
-                    targetFood
+                    0.5
             );
         }
 
         super.update();
-    }
-
-    @Override
-    protected void returnFoodToNest() {
-
-        super.returnFoodToNest();
-
-        if (targetFood != null && !targetFood.hasFood()) {
-
-            targetFood = null;
-        }
     }
 }
