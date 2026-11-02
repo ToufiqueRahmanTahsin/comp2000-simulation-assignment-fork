@@ -1,42 +1,45 @@
-public class FoodSource extends MapObject {
-    private int initialAmount;
-    private int amount;
+public class FoodSource {
 
-    public FoodSource(Cell position, int amount) {
-        this(position, amount, amount);
-    }
+    private int x;
+    private int y;
+    private int foodAmount;
 
-    public FoodSource(Cell position, int amount, int initialAmount) {
-        super(position);
-        if (amount < 0 || initialAmount <= 0) {
+    public FoodSource(int x, int y, int foodAmount) {
+        if (foodAmount < 0) {
             throw new IllegalArgumentException("Food amount cannot be negative.");
         }
-        this.amount = amount;
-        this.initialAmount = initialAmount;
+
+        this.x = x;
+        this.y = y;
+        this.foodAmount = foodAmount;
     }
 
-    @Override
-    public void interact(Ant ant) {
-        if (ant != null && !ant.isCarryingFood() && takeFood()) {
-            ant.pickUpFood(this);
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getFoodAmount() {
+        return foodAmount;
+    }
+
+    public boolean hasFood() {
+        return foodAmount > 0;
+    }
+
+    public int collectFood(int amount) {
+
+        if (amount < 0) {
+            throw new IllegalArgumentException("Collection amount cannot be negative.");
         }
-    }
 
-    public boolean isAvailable() { return amount > 0; }
+        int collected = Math.min(amount, foodAmount);
 
-    public boolean takeFood() {
-        if (!isAvailable()) return false;
-        amount--;
-        return true;
-    }
+        foodAmount -= collected;
 
-    public int getAmount() { return amount; }
-    public int getInitialAmount() { return initialAmount; }
-    public double getPercent() {
-        if (initialAmount <= 0) return 0.0;
-        double p = (double) amount / initialAmount;
-        if (p < 0) return 0.0;
-        if (p > 1) return 1.0;
-        return p;
+        return collected;
     }
 }
