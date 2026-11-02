@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
