@@ -1,18 +1,31 @@
-public class Nest extends MapObject {
+public class Nest {
+
+    private int x;
+    private int y;
     private int storedFood;
 
-    public Nest(Cell position) {
-        super(position);
+    public Nest(int x, int y) {
+        this.x = x;
+        this.y = y;
         this.storedFood = 0;
     }
 
-    @Override
-    public void interact(Ant ant) {
-        if (ant != null && ant.isCarryingFood()) {
-            ant.dropFood(this);
-        }
+    public int getX() {
+        return x;
     }
 
-    public void receiveFood() { storedFood++; }
-    public int getStoredFood() { return storedFood; }
+    public int getY() {
+        return y;
+    }
+
+    public int getStoredFood() {
+        return storedFood;
+    }
+
+    public void storeFood(int amount) {
+
+        if (amount > 0) {
+            storedFood += amount;
+        }
+    }
 }
