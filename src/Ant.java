@@ -82,19 +82,14 @@ public class Ant {
         }
 
         double step = Math.min(speed, distance);
-
         double newX = x + (dx / distance) * step;
         double newY = y + (dy / distance) * step;
 
         try {
-
             world.validatePosition(newX, newY);
-
             x = newX;
             y = newY;
-
         } catch (InvalidPositionException e) {
-
             // Invalid movement is ignored.
         }
     }
