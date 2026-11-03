@@ -22,6 +22,10 @@ public class SimulationFrame extends JFrame {
 
         timer = new Timer(40, e -> {
             world.update();
+
+            if (!world.getColony().verifyParallelCount()) {
+                System.err.println("Parallel count mismatch!");
+            }
             panel.repaint();
         });
 
