@@ -1,37 +1,25 @@
 public class Scout extends Ant {
-
-    public Scout(
-            double x,
-            double y,
-            World world) {
-
-        super(x, y, 3.0, world);
+    public Scout(double x, double y, World world) {
+        super(x, y, 7.0, world, Movement::random);
     }
 
     @Override
     public void update() {
-
-        if (!returningHome) {
-
-            FoodSource food =
-                    world.findNearbyFood(
-                            x,
-                            y,
-                            30
-                    );
-
-            if (food != null && food.hasFood()) {
-
-                returningHome = true;
-
-                world.addPheromone(
-                        x,
-                        y,
-                        1.0
-                );
-            }
+        if (returningHome) {
+            world.addFoodPheromone(x, y, preferredSource);
+            super.update();
+            return;
         }
-
-        super.update();
+        FoodSource found = Movement.nearestFood(this, world, 30);
+        if (found == null) {
+            strategy.chooseAndMove(this, world);
+            return;
+        }
+        preferredSource = found;
+        moveTowards(found.getX(), found.getY());
+        if (distanceTo(found.getX(), found.getY()) <= 5) {
+            returningHome = true;
+            world.addFoodPheromone(x, y, found);
+        }
     }
 }

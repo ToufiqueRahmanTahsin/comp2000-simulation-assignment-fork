@@ -1,5 +1,4 @@
 public class Nest {
-
     private int x;
     private int y;
     private int storedFood;
@@ -10,20 +9,11 @@ public class Nest {
         this.storedFood = 0;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getStoredFood() {
-        return storedFood;
-    }
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getStoredFood() { return storedFood; }
 
     public void storeFood(int amount) {
-
         if (amount > 0) {
             storedFood += amount;
         }
