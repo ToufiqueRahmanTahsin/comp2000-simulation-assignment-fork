@@ -39,10 +39,6 @@ public class Colony<T extends Ant> {
         return ants.parallelStream().filter(Ant::isCarryingFood).count();
     }
 
-    public boolean verifyParallelCount() {
-    return countCarryingFood() == countCarryingFoodParallel();
-}
-
     public Map<String, Long> countByRole() {
         return ants.stream()
                 .collect(Collectors.groupingBy(Ant::roleName, Collectors.counting()));
